@@ -1,0 +1,45 @@
+.container {
+  max-width: 400px;
+  height: 600px;
+  /* width가 주어진 상태에서 좌우 정렬 */
+  margin-left: auto;
+  margin-right: auto;
+  margin: 6rem;
+  overflow: hidden;
+  background-color: #0a2647;
+  text-align: center;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.input {
+  display: flex;
+  justify-content: space-around;
+  background-color: #3a4f7a;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.input-list {
+  width: 300px;
+  padding: 0.5rem;
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.item {
+  margin-left: 3rem;
+  text-align: center;
+  color: white;
+}
+
+.item-delete {
+  margin-left: 8rem;
+}
