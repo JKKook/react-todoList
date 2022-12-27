@@ -20,7 +20,6 @@
   justify-content: space-around;
   background-color: #3a4f7a;
   padding: 1rem;
-  margin-top: 1rem;
 }
 
 .input-list {
@@ -30,16 +29,33 @@
 
 .items {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  margin: 1rem;
+  margin-left: 3rem;
 }
 
 .item {
-  margin-left: 3rem;
-  text-align: center;
+  margin-left: 1rem;
   color: white;
 }
 
 .item-delete {
-  margin-left: 8rem;
+  margin-left: 1rem;
+  color: darksalmon;
+}
+
+.darkModeToggle {
+  margin: 1rem;
+  color: coral;
+  border: none;
+  background-color: transparent;
+}
+
+.taps > input {
+  border: none;
+  background-color: transparent;
+  color: coral;
+  font-size: 16px;
+  padding: 1rem;
 }

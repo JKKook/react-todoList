@@ -1,59 +1,67 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import './AppTodos.css';
-import { FaTrash, FaSun } from 'react-icons/fa';
+import TodoTemplate from './components/TodoTemplate';
+import { DarkModeProvider } from './components/contexts/DarkModeContext';
+import TodoTap from './components/TodoTap';
+import TodoInsert from './components/TodoInsert';
+import TodoList from './components/TodoList';
 
 export default function AppTodos() {
-  const [list, setList] = useState([]);
-  const [input, setInput] = useState('');
+  const [lists, setLists] = useState([
+    {
+      id: 0,
+      text: '',
+      checked: true,
+    },
+  ]);
 
-  const handleChange = (e) => {
-    e.preventDefault();
-    const input = e.target.value;
-    setInput(input);
-  };
+  // Ref에 id값 담기
+  const nextId = useRef(0);
+  console.log(nextId);
 
-  const handleClick = (e) => {
-    setList((prev) => [...prev, input]);
-  };
+  const handleInsert = useCallback(
+    (text) => {
+      const list = {
+        id: nextId.current + 1,
+        text,
+        checked: false,
+      };
+      setLists(lists.concat(list));
+      nextId.current += 1;
+    },
+    [lists],
+  );
+
+  const handleRemove = useCallback(
+    (id) => {
+      setLists(lists.filter((list) => list.id !== id));
+    },
+    [lists],
+  );
+
+  const handleToggle = useCallback(
+    (id) => {
+      // prev => !prev 로 바꿀 수 있지 않을까?
+      setLists(
+        lists.map((list) =>
+          list.id === id ? { ...list, checked: !list.checked } : list,
+        ),
+      );
+    },
+    [lists],
+  );
 
   return (
-    <>
-      <div className='container'>
-        <div className='header'>
-          <button>
-            <FaSun size={24} />
-          </button>
-
-          <div>
-            <input type='button' name='all' value={'All'} />
-            <input type='button' name='active' value={'Active'} />
-            <input type='button' name='completed' value={'Completed'} />
-          </div>
-        </div>
-        <div className='input'>
-          <input
-            className='input-list'
-            type='text'
-            value={input}
-            onChange={handleChange}
-          />
-          <button onClick={handleClick}>click</button>
-        </div>
-        <div className='main'>
-          <ol className='items'>
-            {list.map((list, index) => {
-              return (
-                <li key={index} className='item'>
-                  {list}
-                  <button className='item-delete'>
-                    <FaTrash />
-                  </button>
-                </li>
-              );
-            })}
-          </ol>
-        </div>
-      </div>
-    </>
+    <TodoTemplate>
+      <DarkModeProvider>
+        <TodoTap />
+        <TodoInsert handleInsert={handleInsert} />
+        <TodoList
+          lists={lists}
+          handleRemove={handleRemove}
+          handleToggle={handleToggle}
+        />
+      </DarkModeProvider>
+    </TodoTemplate>
   );
 }
