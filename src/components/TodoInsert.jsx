@@ -1,8 +1,9 @@
 import React, { useState, useCallback } from 'react';
 import { FaPlus } from 'react-icons/fa';
 
-export default function TodoInsert({ handleInsert }) {
-  const [input, setInput] = useState('');
+export default function TodoInsert({ lists, handleInsert }) {
+  // input
+  const [input, setInput] = useState(lists.text);
 
   const handleChange = useCallback((e) => {
     setInput(e.target.value);

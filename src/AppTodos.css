@@ -1,3 +1,7 @@
+button {
+  cursor: pointer;
+}
+
 .container {
   max-width: 400px;
   height: 600px;
@@ -6,7 +10,7 @@
   margin-right: auto;
   margin: 6rem;
   overflow: hidden;
-  background-color: #0a2647;
+  background-color: var(--color-bg);
   text-align: center;
 }
 
@@ -18,7 +22,7 @@
 .input {
   display: flex;
   justify-content: space-around;
-  background-color: #3a4f7a;
+  background-color: var(--color-bg-main);
   padding: 1rem;
 }
 
@@ -58,4 +62,5 @@
   color: coral;
   font-size: 16px;
   padding: 1rem;
+  margin-top: 0.3rem;
 }
