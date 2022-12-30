@@ -6,29 +6,23 @@ import TodoTap from './components/TodoTap';
 import TodoInsert from './components/TodoInsert';
 import TodoList from './components/TodoList';
 
-export default function AppTodos({ darkMode }) {
+export default function AppTodos() {
+  // Ref에 id값 담기
+  const nextId = useRef(0);
   const [lists, setLists] = useState([
     {
-      id: 0,
+      id: nextId,
       text: '',
       checked: false,
+      status: 'active',
     },
   ]);
 
-  // Ref에 id값 담기
-  const nextId = useRef(0);
+  // filtering
+  const [filter, setFilter] = useState(filters[0]);
 
   const handleInsert = useCallback(
-    (text) => {
-      const list = {
-        // current, initialValue
-        id: nextId.current + 1,
-        text,
-        checked: false,
-      };
-      setLists(lists.concat(list));
-      nextId.current += 1;
-    },
+    (list) => setLists([...lists, list]),
     [lists],
   );
 
@@ -51,15 +45,26 @@ export default function AppTodos({ darkMode }) {
     [lists],
   );
 
-  // lists의 Edit
+  //
+  const handleUpdate = (update) =>
+    // 투두스를 순회하면서 그 안의 li(todo)에 접근했을 때, 업데이트 된 Id와 기존 li(todo)의 id 값이 동일하다면 업데이트 아니면 그대로 todo 반환
+    setLists(lists.map((todo) => (todo.id === update.id ? update : todo)));
 
   return (
     <TodoTemplate>
       <DarkModeProvider>
-        <TodoTap />
+        <TodoTap
+          lists={lists}
+          filters={filters}
+          filter={filter}
+          handleFilter={(filter) => setFilter(filter)}
+        />
         <TodoInsert lists={lists} handleInsert={handleInsert} />
         <TodoList
+          filter={filter}
           lists={lists}
+          handleUpdate={handleUpdate}
+          handleInsert={handleInsert}
           handleRemove={handleRemove}
           handleToggle={handleToggle}
         />
@@ -68,16 +73,4 @@ export default function AppTodos({ darkMode }) {
   );
 }
 
-const darkTheme = {
-  color: 'white',
-  bgColor: 'rgb(50,50,50)',
-  containerColor: 'rgb(30,30,30)',
-  textAlign: 'flex-end',
-};
-
-const lightTheme = {
-  color: 'black',
-  containerColor: 'rgb(220,220,220)',
-  textAlign: 'flex-start',
-  bgColor: 'white',
-};
+const filters = ['all', 'active', 'completed'];

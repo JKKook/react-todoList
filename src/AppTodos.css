@@ -1,5 +1,11 @@
 button {
   cursor: pointer;
+  border: none;
+  background-color: transparent;
+  color: white;
+  font-size: 16px;
+  color: coral;
+  text-transform: capitalize;
 }
 
 .container {
@@ -17,6 +23,8 @@ button {
 .header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
 }
 
 .input {
@@ -54,6 +62,11 @@ button {
   color: coral;
   border: none;
   background-color: transparent;
+}
+
+.taps {
+  display: flex;
+  list-style: none;
 }
 
 .taps > input {

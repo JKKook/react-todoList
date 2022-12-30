@@ -1,9 +1,10 @@
 import React, { useState, useCallback } from 'react';
 import { FaPlus } from 'react-icons/fa';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function TodoInsert({ lists, handleInsert }) {
   // input
-  const [input, setInput] = useState(lists.text);
+  const [input, setInput] = useState(lists.text, lists.stauts);
 
   const handleChange = useCallback((e) => {
     setInput(e.target.value);
@@ -13,7 +14,7 @@ export default function TodoInsert({ lists, handleInsert }) {
   const handleSubmit = useCallback(
     (e) => {
       // e.target.value를 onClick 이벤트 함수에 할당해주고
-      handleInsert(input);
+      handleInsert({ id: uuidv4(), text: input, status: 'active' });
       // 한 번 입력했으면 값을 초기화
       setInput('');
       e.preventDefault(); // 브라우저 새로고침 방지
